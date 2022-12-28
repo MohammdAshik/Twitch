@@ -5,11 +5,11 @@ import "../../GlobalStyle/CommonCss.css";
 
 const Header = () => {
   return (
-    <div className="bg-white">
+    <div className="bg-white shadow-sm">
       <div className="navbar primary-font  w-[98%] mx-auto">
         <div className="navbar-start">
           <Link className="flex items-center">
-            <p className="mr-2  bg-primary/20 p-2 rounded-lg   normal-case">
+            <p className="mr-2  bg-primary/10 p-2 rounded-lg   normal-case">
               <BiNetworkChart className="text-2xl text-primary" />
             </p>
             <p className="primary-font text-xl font-semibold">Twitch</p>
@@ -19,7 +19,7 @@ const Header = () => {
           <input
             type="text"
             placeholder="Search"
-            className="input w-[400px] h-[40px] bg-primary/20"
+            className="input w-[400px] h-[40px] bg-primary/10"
           />
         </div>
         <div className="navbar-end">
