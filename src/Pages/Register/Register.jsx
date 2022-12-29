@@ -1,20 +1,31 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { BiNetworkChart } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider";
 
 const Register = () => {
-  const { signUp } = useContext(AuthContext);
+  const { signUp, updateUser, loading } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
+    const name = data.name;
     console.log(data);
     signUp(data.email, data.password)
-      .then((result) => console.log(result))
+      .then((result) => {
+        updateUser(name)
+          .then((result) => {
+            console.log(result);
+            if (!loading) {
+              return navigate("/");
+            }
+          })
+          .catch((err) => console.log(err));
+      })
       .catch((err) => console.log(err));
   };
   return (

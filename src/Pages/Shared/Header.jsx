@@ -8,7 +8,7 @@ const Header = () => {
     <div className="bg-white shadow-sm">
       <div className="navbar primary-font  w-[98%] mx-auto">
         <div className="navbar-start">
-          <Link className="flex items-center">
+          <Link to={"/"} className="flex items-center">
             <p className="mr-2  bg-primary/10 p-2 rounded-lg   normal-case">
               <BiNetworkChart className="text-2xl text-primary" />
             </p>
