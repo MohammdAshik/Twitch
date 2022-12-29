@@ -12,17 +12,38 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const createUser = (name, email) => {
+    const user = {
+      name,
+      email,
+    };
+    fetch("http://localhost:5000/createUser", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged && !loading) {
+          return navigate("/login");
+        }
+      });
+  };
+
   const onSubmit = (data) => {
     const name = data.name;
-    console.log(data);
-    signUp(data.email, data.password)
+    const email = data.email;
+    const password = data.password;
+
+    signUp(email, password)
       .then((result) => {
         updateUser(name)
           .then((result) => {
+            createUser(name, email);
             console.log(result);
-            if (!loading) {
-              return navigate("/");
-            }
           })
           .catch((err) => console.log(err));
       })
