@@ -1,5 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Footer from "../Pages/Shared/Footer";
 import Header from "../Pages/Shared/Header";
 import LeftNavbar from "../Pages/Shared/LeftNavbar";
 import RightNav from "../Pages/Shared/RightNavbar";
@@ -19,6 +20,7 @@ const Root = () => {
           <RightNav />
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

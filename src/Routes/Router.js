@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import PrivetRoute from "../Context/PrivetRoute";
 import Root from "../Layout/Root";
 import Login from "../Pages/Login/Login";
-import CreatePost from "../Pages/Post/CreatePost";
+import NewsFeed from "../Pages/Post/NewsFeed";
 import Profile from "../Pages/Profile/Profile";
 import Register from "../Pages/Register/Register";
 
@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
       </PrivetRoute>
     ),
     children: [
-      { path: "/", element: <CreatePost /> },
+      { path: "/", element: <NewsFeed /> },
       { path: "/profile", element: <Profile /> },
     ],
   },

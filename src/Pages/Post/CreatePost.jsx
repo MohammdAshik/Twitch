@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../../GlobalStyle/CommonCss.css";
 import { BsEmojiSmile } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { BsImages } from "react-icons/bs";
+import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../Context/AuthProvider";
 
 const CreatePost = () => {
+  const [photoURL, setPhotoURL] = useState("");
+  const { user } = useContext(AuthContext);
   const [photo, setPhoto] = useState("");
   const { register, handleSubmit } = useForm();
 
@@ -12,12 +16,67 @@ const CreatePost = () => {
     setPhoto("added");
   };
 
-  const onSubmit = (data) => {
-    const image = data.image;
+  const { data: currentUser } = useQuery({
+    queryKey: ["updateUser"],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:5000/user?email=${user.email}`);
+      const data = await res.json();
+      return data;
+    },
+  });
 
+  const onSubmit = (data) => {
+    const img = data.image[0];
+    const formData = new FormData();
+    formData.append("image", img);
     const status = data.status;
-    if (image.length === 0 && status.length === 0) {
+    if (data.image.length === 0 && status.length === 0) {
       return console.log("working");
+    }
+    const post = {
+      photoURL,
+      status,
+      user: currentUser,
+    };
+    // upload image in imbb
+    if (data.image.length > 0) {
+      const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMGBB_KEY}`;
+      fetch(url, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPhotoURL(data.data.url);
+          fetch(`http://localhost:5000/addPost`, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              photoURL: data?.data?.url,
+              status,
+              user: currentUser,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.acknowledged) {
+                console.log("post added");
+              }
+            });
+        });
+    }
+    if (data.image.length === 0) {
+      fetch(`http://localhost:5000/addPost`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(post),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.acknowledged) {
+            console.log("post added");
+          }
+        });
     }
   };
   return (

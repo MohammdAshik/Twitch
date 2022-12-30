@@ -5,7 +5,7 @@ import "../../GlobalStyle/CommonCss.css";
 
 const Header = () => {
   return (
-    <div className="bg-white shadow-sm">
+    <div className="bg-white shadow-sm ">
       <div className="navbar primary-font  w-[98%] mx-auto">
         <div className="navbar-start">
           <Link to={"/"} className="flex items-center">
@@ -29,13 +29,7 @@ const Header = () => {
             <Link className="mx-2 btn text-primary btn-ghost">About</Link>
           </div>
           <div className="dropdown dropdown-bottom dropdown-end">
-            <label tabIndex={0}>
-              <div className="avatar online">
-                <div className="w-10 rounded-full">
-                  <img src="https://placeimg.com/192/192/people" alt="" />
-                </div>
-              </div>
-            </label>
+            <label tabIndex={0}></label>
             <ul
               tabIndex={0}
               className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"

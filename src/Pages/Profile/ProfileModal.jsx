@@ -35,7 +35,7 @@ const ProfileModal = ({ modalData, setModalData, refetch }) => {
             address,
             photo,
           };
-          console.log(updatedDoc);
+
           fetch(`http://localhost:5000/update_user?email=${user.email}`, {
             method: "PUT",
             headers: { "content-type": "application/json" },
@@ -44,6 +44,7 @@ const ProfileModal = ({ modalData, setModalData, refetch }) => {
             .then((res) => res.json())
             .then((data) => {
               if (data.acknowledged) {
+                setModalData("");
                 refetch();
               }
             });
